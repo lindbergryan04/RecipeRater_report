@@ -5,8 +5,7 @@ author:
 
 # The `>` after `description:` means to ignore line-breaks until next key.
 # If you want to omit the line-break after the end of text, use `>-` instead.
-description: >
-  A data science project where we rate recipes!
+#description: 
 
 # Build settings
 
@@ -32,7 +31,7 @@ minima:
   # solarized-light	   Light variant of solarized color scheme.
   # solarized-dark	   Dark variant of solarized color scheme.
   # solarized	         Adaptive skin for solarized color scheme skins.
-  skin: classic
+  skin: dark
 
   # If you want to link only specific pages in the site-navigation, use this and list
   # the `path` property (as represented via Liquid) of the pages in the order they should
