@@ -1,7 +1,7 @@
-title: Recipe Rater
-author:
-  name: LindbergRyan04
-  email: lindbergryan04@gmail.com
+#title: Recipe Rater
+#author:
+  #name: LindbergRyan04
+  #email: lindbergryan04@gmail.com
 
 # The `>` after `description:` means to ignore line-breaks until next key.
 # If you want to omit the line-break after the end of text, use `>-` instead.
@@ -36,8 +36,8 @@ minima:
   # If you want to link only specific pages in the site-navigation, use this and list
   # the `path` property (as represented via Liquid) of the pages in the order they should
   # be rendered.
-  nav_pages:
-    - about.md
+  #nav_pages:
+   # - about.md
 
   # Set to `true` to show excerpts on the homepage.
   #show_excerpts: false
