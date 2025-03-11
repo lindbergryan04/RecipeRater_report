@@ -6,7 +6,7 @@ by Ryan Lindberg (lindbergryan04@gmail.com) and Ethan Haus (email)
 
 ## Introduction
 
-In this project, we used a large dataset of recipes, and tried to score the recipes based off of how much we think we would like them.
+In this project, we used a large dataset of recipes, and tried use their various features to train a model that could predict how a new recipe would be rated (out of 5 stars). Our model predicted the recipes based on Our dataset had 14 columns, of which we used 4. We also created a new column, avg_rating, which was used as well. We used the minutes, total minutes required to complete the recipe, and the n_steps, or number of steps in the recipe, to 
 
 ---
 
