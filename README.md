@@ -15,7 +15,7 @@ In this project, we used a large dataset of recipes, and tried use their various
 
 Our first step was to replace the ratings of '0' with np.nan. We then created an 'avg_rating' column to represent the average rating of each recipe. We did this by grouping by each recipeID, since most recipes had multiple reviews, then we simply took the mean after grouping. Then, we droppoed some columns we weren't going to lose. These ended up being 'review', 'contributor_id', 'user_id', 'date', 'submitted', 'description', and 'steps'. After, we looked at all the columns with string lists, and converted them to lists. EDIT. Our plan was then to take these lists, and turn the list values into individual columns. We ended up only needing to do this with the 'nutrition' column, and turned all the different elements of 'nutrition' into their own columns. Since we'd extracted all that we needed from 'nutrition' we dropped the column. 
 
-<iframe src="assets/example.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="eda-minutes.html" width=800 height=600 frameBorder=0></iframe>
 
 
 ---
