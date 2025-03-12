@@ -19,6 +19,8 @@ For our Univariate Analysis we wanted more insight on our 'minutes' and 'ratings
 
 <iframe src="eda-minutes.html" width="800" height="600" frameBorder="0"></iframe>
 
+
+
 As you can see in the graph above, the graph is skewed right, with the majority of our values normally distributed around a rough mean of 30 minutes. There are definetely some outlier recipes that take much longer, but it's clear to see that most of our recipes are around 10 minutes to an hour. 
 
 
