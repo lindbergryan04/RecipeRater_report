@@ -37,7 +37,28 @@ When initially starting this project, we were looking to see if any columns were
 
 As you can see, there was nothing that had a strong correlation with 'rating' or 'avg_rating' other than... 'rating' and 'avg_rating'. Our strongest was the minutes column which had a whopping $R^2$ of 0.01. At least it was positive! Upon seeing this, we knew we needed to create and explore some aggregate statistics. 
 
-NEED PIVOT TABLE
+|   n_steps |   ('mean', 'avg_rating') |   ('count', 'avg_rating') |
+|----------:|-------------------------:|--------------------------:|
+|         1 |                  4.66336 |                        57 |
+|         2 |                  4.72977 |                       157 |
+|         3 |                  4.72558 |                       258 |
+|         4 |                  4.70076 |                       287 |
+|         5 |                  4.71929 |                       367 |
+|         6 |                  4.64308 |                       382 |
+|         7 |                  4.68536 |                       433 |
+|         8 |                  4.69462 |                       402 |
+|         9 |                  4.64203 |                       411 |
+|        10 |                  4.64816 |                       348 |
+|        11 |                  4.65225 |                       292 |
+|        12 |                  4.64835 |                       256 |
+|        13 |                  4.73724 |                       217 |
+|        14 |                  4.72694 |                       183 |
+|        15 |                  4.67894 |                       144 |
+|        16 |                  4.72795 |                       135 |
+|        17 |                  4.75346 |                       121 |
+|        18 |                  4.57944 |                        76 |
+|        19 |                  4.70668 |                        70 |
+|        20 |                  4.72231 |                        66 |
 
 We made a pivot table that took the mean and count of the 'avg_rating' column for every value of 'n_steps', which we used as our index. We were hoping to find some sort of pattern between the number of steps and rating. Maybe people tended to rate recipes higher that required less work? I probably would. Or maybe it was the opposite case that the more you put into it, the better the result? Nope. Score one for nihilism. We didn't see any clear trends in the 'avg_rating' mean, although it's hard to judge because of our distribution of recipe's 'n_steps' has the vast majority of it's contents between 5 steps and 10 steps, which leaves us with inconsistent standards for the 'avg_rating'.
 
