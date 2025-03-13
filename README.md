@@ -1,4 +1,4 @@
-# Recipe Rater
+## Recipe Rater
 
 by Ryan Lindberg (lindbergryan04@gmail.com) and Ethan Haus (ethanhhaus@gmail.com)
 
