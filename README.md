@@ -32,7 +32,7 @@ As you can see in the graph above, the graph is skewed right EDIT, with the majo
 
 When initially starting this project, we were looking to see if any columns were correlated with each other. We thought this would be great to know in helpig us find columns with the best predictive power for ratings. 
 
-<iframe src="eda-heatmap3.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="eda-heatmap4.html" width="800" height="600" frameBorder="0"></iframe>
 
 
 As you can see, there was nothing that had a strong correlation with 'rating' or 'avg_rating' other than... 'rating' and 'avg_rating'. Our strongest was the minutes column which had a whopping $R^2$ of 0.01. At least it was positive! Upon seeing this, we knew we needed to create and explore some aggregate statistics. 
