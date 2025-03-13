@@ -42,23 +42,33 @@ We made a pivot table that took the mean and count of the 'avg_rating' column fo
 
 ## Assessment of Missingness
 
-Here's what a Markdown table looks like. Note that the code for this table was generated _automatically_ from a DataFrame, using
+The rating column has 15036 missing values. Some people didn't leave a 1-5 star rating with their review. We've already changed these values to null during the cleaning process. We believe this is NMAR, because the missingness of the rating doesn't depend on any other column. There's no correlation between high protein recipes not having a rating, for example. We find it very likely that most people didn't find it necessary/forgot to rank the recipe.
 
-```py
-print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
-```
+WHAT GRAPH SHOULD WE USE
 
-| Quarter     |   Count |
-|:------------|--------:|
-| Fall 2020   |       3 |
-| Winter 2021 |       2 |
-| Spring 2021 |       6 |
-| Summer 2021 |       4 |
-| Fall 2021   |      55 |
+
 
 ---
 
 ## Hypothesis Testing
+
+
+- Null Hypothesis ($H_{0}$): 
+
+There is no significant correlation between human calculated balance scores based off intuition and the algorithmically calculated balance scores. 
+
+$H_{0}$ : $p = 0$
+
+(Where $p$ represents the correlation coefficient between human human balance scores and algorithm balance scores.)
+
+- Alternative Hypothesis ($H_{A}$):
+
+​
+There is a significant correlation between human calculated balance scores based off intuition and the algorithmically calculated balance scores. 
+
+$H_{0}$ : $p ≠ 0$
+
+Our test statistic is the difference of balance scores calculated by humans vs the balance scores calculated by algorithm. We are going to test at the popular 95% confident level, or .05. We got a P-Value of .0048, which definetely falls under our significance level. Therefore, we will reject our null hypothesis in favor of the alternative. This means that our formula for calculating a holistic statistic for each recipe is generalizable  to a population with similar values of taste vs ease vs health in their cooking. 
 
 
 ---
