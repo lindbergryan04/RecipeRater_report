@@ -27,6 +27,9 @@ As you can see in the graph above, the graph is skewed right EDIT, with the majo
 
 When initially starting this project, we were looking to see if any columns were correlated with each other. We thought this would be great to know in helpig us find columns with the best predictive power for ratings. 
 
+<iframe src="eda-heatmap.html" width="800" height="600" frameBorder="0"></iframe>
+
+
 
 ---
 
