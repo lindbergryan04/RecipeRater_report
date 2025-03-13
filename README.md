@@ -14,13 +14,13 @@ In this project, we used a large dataset of recipes, and tried use their various
 
 Our first step was to replace the ratings of '0' with np.nan. We then created an 'avg_rating' column to represent the average rating of each recipe. We did this by grouping by each recipeID, since most recipes had multiple reviews, then we simply took the mean after grouping. Then, we dropped some columns we weren't going to use. These ended up being 'review', 'contributor_id', 'user_id', 'date', 'submitted', 'description', and 'steps'. After, we looked at all the columns with string lists, and converted them to lists. Our plan was then to take these lists, and turn the list values into individual columns. We ended up only needing to do this with the 'nutrition' column, and turned all the different elements of 'nutrition' into their own columns. Since we'd extracted all that we needed from 'nutrition' we dropped the column. 
 
-| name                                 |   minutes |   n_steps |   n_ingredients |   avg_rating |   calories |   total_fat |   sugar |   sodium |   protein |   sat_fat |   carbs |
-|:-------------------------------------|----------:|----------:|----------------:|-------------:|-----------:|------------:|--------:|---------:|----------:|----------:|--------:|
-| 1 brownies in the world    best ever |        40 |        10 |               9 |            4 |      138.4 |          10 |      50 |        3 |         3 |        19 |       6 |
-| 1 in canada chocolate chip cookies   |        45 |        12 |              11 |            5 |      595.1 |          46 |     211 |       22 |        13 |        51 |      26 |
-| 412 broccoli casserole               |        40 |         6 |               9 |            5 |      194.8 |          20 |       6 |       32 |        22 |        36 |       3 |
-| 412 broccoli casserole               |        40 |         6 |               9 |            5 |      194.8 |          20 |       6 |       32 |        22 |        36 |       3 |
-| 412 broccoli casserole               |        40 |         6 |               9 |            5 |      194.8 |          20 |       6 |       32 |        22 |        36 |       3 |
+| name                                 |   minutes |   n_steps |   avg_rating |   calories |   sugar |   sodium |   protein |   sat_fat |
+|:-------------------------------------|----------:|----------:|-------------:|-----------:|--------:|---------:|----------:|----------:|
+| 1 brownies in the world    best ever |        40 |        10 |            4 |      138.4 |      50 |        3 |         3 |        19 |
+| 1 in canada chocolate chip cookies   |        45 |        12 |            5 |      595.1 |     211 |       22 |        13 |        51 |
+| 412 broccoli casserole               |        40 |         6 |            5 |      194.8 |       6 |       32 |        22 |        36 |
+| 412 broccoli casserole               |        40 |         6 |            5 |      194.8 |       6 |       32 |        22 |        36 |
+| 412 broccoli casserole               |        40 |         6 |            5 |      194.8 |       6 |       32 |        22 |        36 |
 
 For our Univariate Analysis we wanted more insight on our 'minutes' and 'ratings' columns. Since our average ratings were so high, we wanted to see a distribution of all the values. And since we figured that the amount of effort would heavily factor into people's perceptions of the recipe and therefore their rating, we felt effort was best quantified by how long it took to complete the recipe, ergo 'minutes' column. So we decided to view the distribution to see how to best weight the feature. 
 
