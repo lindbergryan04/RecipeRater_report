@@ -9,7 +9,7 @@ Ryan Lindberg (lindbergryan04@gmail.com) and Ethan Haus (ethanhaus@gmail.com)
 
 Since transferring to UC San Diego, our cooking habits have taken a hit. With busy schedules and limited time, we've started prioritizing convenience over nutrition, which is something we’d like to change. The goal of this project is to find a way to optimize recipe selection, so we can cook meals that are tasty, quick to prepare, and nutritionally balanced without spending hours in the kitchen.
 
-To do this, we analyzed a large dataset of 234,429 recipes with 15 features and built a machine learning model to predict how highly a recipe will be rated (out of 5 stars). There’s no shortage of recipes available online, but sorting through them to figure out which are actually worth making can be a pain—especially if a recipe has no reviews. A good prediction model could fill in the gaps, helping users filter through recipes they've saved and prioritize the ones that are most likely to be good.
+To do this, we analyzed a large dataset of 234,429 recipes with 15 features and built a machine learning model to predict how highly a recipe will be rated (out of 5 stars). There’s no shortage of recipes available online, but sorting through them to figure out which are actually worth making can be a pain, especially if a recipe has no reviews. A good prediction model could fill in the gaps, helping users filter through recipes they've saved and prioritize the ones that are most likely to be good.
 
 Our approach started with exploratory data analysis (EDA) to figure out which recipe features were actually useful for predicting ratings. We focused on cooking time, number of steps, and key nutritional values (calories, sugar, sodium, protein, and saturated fat). We also introduced a new metric: the balance score, which takes into account taste (rating), effort (prep time & complexity), and healthiness to give each recipe a holistic score.
 
@@ -36,9 +36,9 @@ For our Univariate Analysis we wanted more insight on our 'minutes' and 'ratings
 
 <iframe src="assets/eda-minutes.html" width="800" height="400" frameBorder="0"></iframe>
 
-As you can see in the graph above, the graph is skewed right EDIT, with the majority of our values normally distributed around a rough mean of 30 minutes. There are definetely some outlier recipes that take much longer, but it's clear to see that most of our recipes are around 10 minutes to an hour. 
+As you can see in the graph above, the graph is skewed to theright , with the majority of our values normally distributed around a rough mean of 30 minutes. There are definetely some outlier recipes that take much longer, but it's clear to see that most of our recipes are around 10 minutes to an hour. 
 
-When initially starting this project, we were looking to see if any columns were correlated with each other. We thought this would be great to know in helpig us find columns with the best predictive power for ratings. 
+When initially starting this project, we were looking to see if any columns were correlated with each other. We thought this would be great to know in helping us find columns with the best predictive power for ratings. 
 
 <iframe src="assets/eda-heatmap5.html" width="800" height="600" frameBorder="0"></iframe>
 
@@ -79,7 +79,7 @@ We made a pivot table that took the mean and count of the 'avg_rating' column fo
 
 The rating column has 15036 missing values. This is due to the fact that some users did not leave a 1-5 rating with their review, causing it to default to 0. These 0 values were replaced with np.nan during the cleaning process. This might look like NMAR because the value of the missing rating could be dependent on the missing rating itself. This missingness is common with reviews and ratings, and is known as 'review bias,' which is the phenomenon that describes how people tend to only leave ratings when they have a strong opinion on something. These users who left no rating likely had a neutral opinion on the recipe, and therefore didn't feel compelled to give it a rating. At the same time though, we found that the missingness of rating was actually dependent on other columns of the dataset. This means that the rating column is actually MAR and not NMAR. 
 
-<iframe src="assets/missingness_plot1.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot1.html" width="800" height="400" frameBorder="0"></iframe>
 
 Observed Difference in Mean Step Count: 1.1535
 
@@ -87,12 +87,12 @@ P-value: 0.00
 
 Lets look at the kde plots:
 
-<iframe src="assets/missingness_plot2.html" width="800" height="600" frameBorder="0"></iframe>
-<iframe src="assets/missingness_plot3.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot2.html" width="800" height="400" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot3.html" width="800" height="400" frameBorder="0"></iframe>
 
 It appears that the missingness of rating may be dependent on the number of steps in a recipe! This could be due to many reasons. If we consider the fact that these are users who *did* leave a review, but *didn't* leave a rating, the true reason for this relationship is harder to track down. Users may feel that they didn't do the long and complex recipe justice, and therefore be reluctant to leave a rating because they don't trust their judgement. Or perhaps they had a higher expectation of the complex recipe, and were reluctant to show that it didn't turn out as well as they had hoped. Or perhaps they figured 'I've been writing this stupid review for 10 minutes, I'm done'.
 
-<iframe src="assets/missingness_plot4.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot4.html" width="800" height="400" frameBorder="0"></iframe>
 
 Observed Difference in Mean minutes: 51.4524
 
