@@ -24,7 +24,7 @@ Our first step was to replace the ratings of '0' with np.nan. We then created an
 
 For our Univariate Analysis we wanted more insight on our 'minutes' and 'ratings' columns. Since our average ratings were so high, we wanted to see a distribution of all the values. And since we figured that the amount of effort would heavily factor into people's perceptions of the recipe and therefore their rating, we felt effort was best quantified by how long it took to complete the recipe, ergo 'minutes' column. So we decided to view the distribution to see how to best weight the feature. 
 
-<iframe src="eda-minutes.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/eda-minutes.html" width="800" height="600" frameBorder="0"></iframe>
 
 
 
@@ -32,7 +32,7 @@ As you can see in the graph above, the graph is skewed right EDIT, with the majo
 
 When initially starting this project, we were looking to see if any columns were correlated with each other. We thought this would be great to know in helpig us find columns with the best predictive power for ratings. 
 
-<iframe src="eda-heatmap4.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/eda-heatmap4.html" width="800" height="600" frameBorder="0"></iframe>
 
 
 As you can see, there was nothing that had a strong correlation with 'rating' or 'avg_rating' other than... 'rating' and 'avg_rating'. Our strongest was the minutes column which had a whopping $R^2$ of 0.01. At least it was positive! Upon seeing this, we knew we needed to create and explore some aggregate statistics. 
@@ -69,15 +69,68 @@ We made a pivot table that took the mean and count of the 'avg_rating' column fo
 
 ## Assessment of Missingness
 
-The rating column has 15036 missing values. Some people didn't leave a 1-5 star rating with their review. We've already changed these values to null during the cleaning process. We believe this is NMAR, because the missingness of the rating doesn't depend on any other column. There's no correlation between high protein recipes not having a rating, for example. We find it very likely that most people didn't find it necessary/forgot to rank the recipe.
+The rating column has 15036 missing values. This is due to the fact that some users did not leave a 1-5 rating with their review, causing it to default to 0. These 0 values were replaced with np.nan during the cleaning process. This might look like NMAR because the value of the missing rating could be dependent on the missing rating itself. This missingness is common with reviews and ratings, and is known as 'review bias,' which is the phenomenon that describes how people tend to only leave ratings when they have a strong opinion on something. These users who left no rating likely had a neutral opinion on the recipe, and therefore didn't feel compelled to give it a rating. At the same time though, we found that the missingness of rating was actually dependent on other columns of the dataset. This means that the rating column is actually MAR and not NMAR. 
 
-WHAT GRAPH SHOULD WE USE
+<iframe src="assets/missingness_plot1.html" width="800" height="600" frameBorder="0"></iframe>
 
+<iframe src="assets/missingness_plot2" width="800" height="600" frameBorder="0"></iframe>
+
+<iframe src="assets/missingness_plot3" width="800" height="600" frameBorder="0"></iframe>
+
+<iframe src="assets/missingness_plot4" width="800" height="600" frameBorder="0"></iframe>
 
 
 ---
 
 ## Hypothesis Testing
+
+Before we begin our hypothesis test, we will first define what we call a balance score. The balance score is a rating that we give each recipe based on its balance between time to cook, taste, and nutritional profile. We will using recipe rating as a proxy for taste.
+
+We will manually define a formula to calculate this balance score, which returns scores from 1-10, with 10 being the most healthy, easy to cook, and protein dense meals, and 1 being unhealthy, hard to cook, and less nutritional meals.
+
+This score is mostly subjective, as we are setting the weights ourselves. This is okay though, because our goal is to plug in our own recipes, and find out if its a recipe we would like to cook.
+
+$$
+\begin{aligned}
+W_{\text{RATING\_HIGH}} &= 0.4 \\
+W_{\text{RATING\_MEDIUM}} &= 0.2 \\
+W_{\text{RATING\_LOW}} &= 0.0 \\
+W_{\text{TIME}} &= -0.01 \quad &\text{(Penalizes long cooking times)} \\
+W_{\text{N\_STEPS}} &= -0.06 \quad &\text{(Penalizes overly complex recipes)} \\
+W_{\text{SAT\_FAT}} &= -0.06 \quad &\text{(Less saturated fat is better)} \\
+W_{\text{CALORIES}} &= -0.01 \quad &\text{(Penalizes excessive calories)} \\
+W_{\text{PROTEIN}} &= 0.2 \quad &\text{(More protein is better)} \\
+W_{\text{CARBS}} &= -0.01 \quad &\text{(Too many carbs reduce balance)} \\
+W_{\text{SUGAR}} &= -0.04 \quad &\text{(Excess sugar is penalized)} \\
+W_{\text{SODIUM}} &= -0.03 \quad &\text{(Excess sodium is penalized)}
+\end{aligned}
+$$
+
+
+$$
+\text{balance\_score} =
+    \text{rating\_high} + \text{rating\_medium} + \text{rating\_low} +
+    \left(W_{\text{TIME}} \cdot \text{time\_factor} \right) +
+    \left(W_{\text{N\_STEPS}} \cdot \log\_decay(\text{n\_steps}, \text{max\_values}_{\text{n\_steps}}) \right) +
+    \left(W_{\text{SAT\_FAT}} \cdot \log\_decay(\text{sat\_fat}, \text{max\_values}_{\text{sat\_fat}}) \right) +
+    \left(W_{\text{CALORIES}} \cdot \log\_decay(\text{calories}, \text{max\_values}_{\text{calories}}) \right) +
+    \left(W_{\text{PROTEIN}} \cdot \log\_decay(\text{protein}, \text{max\_values}_{\text{protein}}) \right) +
+    \left(W_{\text{CARBS}} \cdot \log\_decay(\text{carbs}, \text{max\_values}_{\text{carbs}}) \right) +
+    \left(W_{\text{SUGAR}} \cdot \log\_decay(\text{sugar}, \text{max\_values}_{\text{sugar}}) \right) +
+    \left(W_{\text{SODIUM}} \cdot \log\_decay(\text{sodium}, \text{max\_values}_{\text{sodium}}) \right)
+$$
+
+
+
+|     id | name                                 | ... |   avg_rating | rating_category   | rating_low   | rating_medium   | rating_high   |   balance_score |
+|-------:|:-------------------------------------|----:|-------------:|:------------------|:-------------|:----------------|:--------------|----------------:|
+| 333281 | 1 brownies in the world    best ever | ... |            4 | Low               | True         | False           | False         |         1.53785 |
+| 453467 | 1 in canada chocolate chip cookies   | ... |            5 | High              | False        | False           | True          |         8.25504 |
+| 306168 | 412 broccoli casserole               | ... |            5 | High              | False        | False           | True          |         8.87765 |
+| 286009 | millionaire pound cake               | ... |            5 | High              | False        | False           | True          |         8.40649 |
+| 475785 | 2000 meatloaf                        | ... |            5 | High              | False        | False           | True          |         8.75722 |
+
+
 
 
 - Null Hypothesis ($H_{0}$): 
@@ -98,4 +151,19 @@ $H_{0}$ : $p ≠ 0$
 Our test statistic is the difference of balance scores calculated by humans vs the balance scores calculated by algorithm. We are going to test at the popular 95% confident level, or .05. We got a P-Value of .0048, which definetely falls under our significance level. Therefore, we will reject our null hypothesis in favor of the alternative. This means that our formula for calculating a holistic statistic for each recipe is generalizable  to a population with similar values of taste vs ease vs health in their cooking. 
 
 
+<iframe src="assets/hypothesis_plot1" width="800" height="600" frameBorder="0"></iframe>
+
+
+
+<iframe src="assets/hypothesis_plot2" width="800" height="600" frameBorder="0"></iframe>
+
+
+
+#### Hypothesis Test Conclusion:
+
+We got a P-value of .0048, a Pearson's R of .511. This means we reject the null in favor of the alternative hypothesis, meaning that our formula for calculating the balance score is likely generalizable to a population with similar values of taste vs ease vs health in their cooking.
+
+
 ---
+
+
