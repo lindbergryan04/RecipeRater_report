@@ -242,7 +242,7 @@ Precision = (True Positives in category) / (Predicted Positives in category)
 ### Results & Interpretation  
 
 Observed Precision by Group:
-'High': 0.5913778745756197, 'Low': 0.38782051282051283, 'Medium': 0.0
+'High': 0.591, 'Low': 0.387, 'Medium': 0.0
 
 Observed Range of Precision Differences: 0.5914
 
