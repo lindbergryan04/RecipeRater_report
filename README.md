@@ -24,11 +24,13 @@ This project utilizes EDA, feature engineering, statistical hypothesis testing, 
 
 Our first step in cleaning the data was to replace the ratings of '0' with np.nan. We then created an 'avg_rating' column to represent the average rating for each recipe. We did this by grouping by each recipeID, since most recipes had multiple reviews, then we simply took the mean after grouping. 
 
+We dropped the duplicate reviews, but kept a copy of the dataframe with duplicates for the missingness section. 
+
 Then, we dropped some columns we weren't going to use. These ended up being 'review', 'contributor_id', 'user_id', 'date', 'submitted', 'description', and 'steps'. 
 
 Next, we took the nutrition column which contained a list of nutritional information for the recipe in the form: [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)] (PDV stands for “percentage of daily value”), and we converted each value into its own column for each recipe. 
 
-Since we'd extracted all that we needed from 'nutrition' we dropped the column. Our data ended up looking like this, minus the 'tags','ingredients','total_fat' and 'carbs' columns, which we couldn't include in the report in order for our dataframe to horizontally fit the page.
+Since we'd extracted all that we needed from 'nutrition' we dropped the column. Our data ended up looking like this, minus the 'tags', 'ingredients', 'total_fat', and 'carbs' columns, which we couldn't include in the report in order for our dataframe to horizontally fit the page.
 
 | name                                 |   minutes |   n_steps |   avg_rating |... |   calories |   sugar |   sodium |   protein |   sat_fat |
 |:-------------------------------------|----------:|----------:|-------------:|---:|-----------:|--------:|---------:|----------:|----------:|
@@ -37,6 +39,7 @@ Since we'd extracted all that we needed from 'nutrition' we dropped the column. 
 | 412 broccoli casserole               |        40 |         6 |            5 |... |      194.8 |       6 |       32 |        22 |        36 |
 | 412 broccoli casserole               |        40 |         6 |            5 |... |      194.8 |       6 |       32 |        22 |        36 |
 | 412 broccoli casserole               |        40 |         6 |            5 |... |      194.8 |       6 |       32 |        22 |        36 |
+
 
 For our univariate analysis we wanted more insight on our 'minutes' columns. 
 We figured that the amount of effort would heavily factor into people's perceptions of the recipe and therefore their rating, so understanding the distribution of minutes was essential to get a good idea of the recipes we were working with.
