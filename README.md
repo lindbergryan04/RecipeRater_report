@@ -1,5 +1,7 @@
 
-by Ryan Lindberg (lindbergryan04@gmail.com) and Ethan Haus (ethanhaus@gmail.com)
+#### Contributors:
+
+Ryan Lindberg (lindbergryan04@gmail.com) and Ethan Haus (ethanhaus@gmail.com)
 
 ---
 
@@ -131,8 +133,10 @@ The resulting dataframe:
 | 286009 | millionaire pound cake               | ... |            5 | High              | False        | False           | True          |         8.40649 |
 | 475785 | 2000 meatloaf                        | ... |            5 | High              | False        | False           | True          |         8.75722 |
 
+Lets check out the distribution of our balance scores:
+<iframe src="assets/hypothesis_plot1.html" width="800" height="600" frameBorder="0"></iframe>
 
-Now that we have our balance score, lets perform our hypothesis test. For this section, we had a friend calculate 30 random recipes by hand, using his own intuition, given the information that 'balance' is a defined as a balance between time, healthiness, and rating as a proxy for taste. 
+Now that we have our balance scores calculated, lets perform our hypothesis test. For this section, we had a friend calculate balance scores for 30 random recipes by hand, using his own intuition, given the information that 'balance' in this context means a balance between time, healthiness, and rating as a proxy for taste. 
 
 We would like to test if our algorithmically calculated balance scores reflect what someone with similar priorities in their diet might score a recipe.
 
@@ -155,7 +159,6 @@ H(A) : p ≠ 0
 
 Our p-value threshhold is .05.
 
-<iframe src="assets/hypothesis_plot1.html" width="800" height="600" frameBorder="0"></iframe>
 <iframe src="assets/hypothesis_plot2.html" width="800" height="600" frameBorder="0"></iframe>
 
 We got a P-Value of .0048, which definetely falls under our significance level. Therefore, we will reject our null hypothesis in favor of the alternative. This suggests that our formula for calculating a holistic balance score for each recipe is generalizable to a population with similar values of taste vs ease vs health in their cooking. 
