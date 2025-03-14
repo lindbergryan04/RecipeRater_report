@@ -147,10 +147,11 @@ H(0) : p = 0
 (Where p represents the correlation coefficient between human human balance scores and algorithm balance scores.)
 
 - Alternative Hypothesis (HA):
+
 ​
 There is a significant correlation between human calculated balance scores based off intuition and the algorithmically calculated balance scores. 
 
-H(A) : p ≠ 0$
+H(A) : p ≠ 0
 
 Our p-value threshhold is .05.
 
