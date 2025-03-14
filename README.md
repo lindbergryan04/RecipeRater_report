@@ -40,7 +40,7 @@ As you can see in the graph above, the graph is skewed to theright , with the ma
 
 When initially starting this project, we were looking to see if any columns were correlated with each other. We thought this would be great to know in helping us find columns with the best predictive power for ratings. 
 
-<iframe src="assets/eda-heatmap5.html" width="830" height="830" frameBorder="0"></iframe>
+<iframe src="assets/eda-heatmap5.html" width="830" height="810" frameBorder="0"></iframe>
 
 
 As you can see, there was nothing that had a strong correlation with 'rating' or 'avg_rating' other than... 'rating' and 'avg_rating'. Our strongest was the minutes column which had a whopping $R^2$ of 0.01. At least it was positive! Upon seeing this, we knew we needed to create and explore some aggregate statistics. 
@@ -177,7 +177,7 @@ We got a P-Value of .0048, which definetely falls under our significance level. 
 
 As cool as our balance score feature from the hypothesis test was, we sadly cannot use it for our prediction. We ultimately want to predict how a user would rate a recipe. Our balance score could be a great feature for this, but it usees rating category to quantify the 'taste' of an recipe. We can't use rating to predict rating Back to the drawing board! We noticed that the vast majority of our reviews were 5 stars, and those that weren't, were 4 stars. This lead us to framing a new classification problem. We decided to create 3 seperate bins for rating, and try to predict the class of each recipe in terms of one of these bins. We have low (<= 4.6 stars), medium (4.6-4.99 stars), and high (5 stars). Since we have three buckets, this is multiclass classification. We think a good model for this task would be a random forest from SKLearn. 
 
-We are chose to predict the rating category of each recipe because that's what struck us as 'coolest' and most useful, since we could use these predicted ratings to calculate balance scores for our own recipes, which have never been rated before. We used features like the time the recipe takes, the number of steps in the recipe, and the nutritional information of the recipe. We are chose to evaulate our model based on accuracy, simce the goal of our prediction is to assign a rating category as accurately as possible, and we want our predicted ratings to best reflect to the real rating. Minimizing false positives or false negatives is not the greatest priority, since this is a low stakes prediction task. 
+We are chose to predict the rating category of each recipe because that's what struck us as 'coolest' and most useful, since we could use these predicted ratings to calculate balance scores for our own recipes, which have never been rated before. We used features like the time the recipe takes, the number of steps in the recipe, and the nutritional information of the recipe. We chose to evaulate our model based on accuracy, simce the goal of our prediction is to assign a rating category as accurately as possible, and we want our predicted ratings to best reflect to the real rating. Minimizing false positives or false negatives is not the greatest priority, since this is a low stakes prediction task. 
 
 ---
 
@@ -193,5 +193,46 @@ When it came time to craft our final, new and improved model, we started by engi
 
 Next, we needed to optimize model hyperparameters. To do this, we used SKLearns GridSearchCV, which used cross fold validation to test 54 combinations of hyperparameters. The hyperparameters we tested were n_estimators, max_features, min_samples_split, and min_samples_leaf, with bootstrap enabled. The optimal hyperparamters we found were max_features = sqrt, classifier__min_samples_leaf = 4, min_samples_split = 10, n_estimators = 300.
 
-Finally, we put it all together into one final model, using bootstrapping, 
+Finally, we put it all together into one final model, using everything we had learned so far. We implmented feature subetting, where, for each tree, we select a random subset of features that the tree will use to make decisions. This prevents the tree from relying too much on strong predictors, and increases the diversity among trees, leading to a more generalizable model. And finally, we added bootstrapping, or Bagging as its called, to make sure each tree is trained on a random bootstrapped sample of the training data. This also improves variance among trees, which leads to better generalization.
 
+With all of these improvements, our final model had an accuracy of 58%, a whopping 1% improvement over our base model.
+
+We suspect that this primarily due to the fact that our features really do not tell us much about the target, and our base model had already made use of almost all of the meaningful patterns present in the data. 
+Another suspicion is uneven the uneven distribution of rating categories. With such a large number of ratings in the ‘high’ category, the model may be biased to predict high in most cases. Currently about 60% of the recipes are rated ‘high’, 30% are rated ‘low’, and around 10% rated ‘medium’. We attempted to redefine our bins such that we had a 60/20/20 split, but found this didn’t affect the results. 
+
+---
+
+## Fairness Analysis  
+
+To check if our model performs worse for certain groups, we compared the **precision** of predictions across the low, medium, and high rating categories. We ran a permutation test to determine whether the observed differences in precision were statistically significant.  
+
+### Observed Statistic  
+**0.591**  
+
+### Null Hypothesis (H₀)  
+Our model is fair in terms of precision between rating groups. Any differences in precision between low, medium, and high categories are due to random chance, not systematic bias.  
+
+**Restated:** The maximum difference in precision across rating categories is approximately zero:  
+> max(Precision) - min(Precision) ≈ 0 for all categories (low, medium, high).  
+
+### Alternative Hypothesis (Hₐ)  
+Our model is unfair, meaning there is a significant difference in precision across rating categories. The observed disparity is greater than what would be expected by chance.  
+
+**Restated:**  
+> max(Precision) - min(Precision) > some threshold (δ).  
+
+### Precision Calculation  
+Precision for a given category is calculated as:  
+
+Precision = (True Positives in category) / (Predicted Positives in category)
+
+### Results & Interpretation  
+Since the p-value is below 0.05, we*reject the null hypothesis, meaning our model exhibits precision disparities across rating categories.  
+
+One major issue is that our model is very unfair toward medium-rated recipes, it doesn’t predict the medium category at all! Those poor medium-rated recipes...  
+
+That said, this is a low-stakes prediction task, so a misclassified rating doesn’t have very tangible real-world consequences. 
+
+---
+
+## Thaks for checking out our project!
