@@ -34,13 +34,13 @@ Our first step was to replace the ratings of '0' with np.nan. We then created an
 
 For our Univariate Analysis we wanted more insight on our 'minutes' and 'ratings' columns. Since our average ratings were so high, we wanted to see a distribution of all the values. And since we figured that the amount of effort would heavily factor into people's perceptions of the recipe and therefore their rating, we felt effort was best quantified by how long it took to complete the recipe, ergo 'minutes' column. So we decided to view the distribution to see how to best weight the feature. 
 
-<iframe src="assets/eda-minutes.html" width="800" height="400" frameBorder="0"></iframe>
+<iframe src="assets/eda-minutes.html" width="800" height="420" frameBorder="0"></iframe>
 
 As you can see in the graph above, the graph is skewed to theright , with the majority of our values normally distributed around a rough mean of 30 minutes. There are definetely some outlier recipes that take much longer, but it's clear to see that most of our recipes are around 10 minutes to an hour. 
 
 When initially starting this project, we were looking to see if any columns were correlated with each other. We thought this would be great to know in helping us find columns with the best predictive power for ratings. 
 
-<iframe src="assets/eda-heatmap5.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/eda-heatmap5.html" width="830" height="830" frameBorder="0"></iframe>
 
 
 As you can see, there was nothing that had a strong correlation with 'rating' or 'avg_rating' other than... 'rating' and 'avg_rating'. Our strongest was the minutes column which had a whopping $R^2$ of 0.01. At least it was positive! Upon seeing this, we knew we needed to create and explore some aggregate statistics. 
@@ -79,7 +79,7 @@ We made a pivot table that took the mean and count of the 'avg_rating' column fo
 
 The rating column has 15036 missing values. This is due to the fact that some users did not leave a 1-5 rating with their review, causing it to default to 0. These 0 values were replaced with np.nan during the cleaning process. This might look like NMAR because the value of the missing rating could be dependent on the missing rating itself. This missingness is common with reviews and ratings, and is known as 'review bias,' which is the phenomenon that describes how people tend to only leave ratings when they have a strong opinion on something. These users who left no rating likely had a neutral opinion on the recipe, and therefore didn't feel compelled to give it a rating. At the same time though, we found that the missingness of rating was actually dependent on other columns of the dataset. This means that the rating column is actually MAR and not NMAR. 
 
-<iframe src="assets/missingness_plot1.html" width="800" height="400" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot1.html" width="800" height="420" frameBorder="0"></iframe>
 
 Observed Difference in Mean Step Count: 1.1535
 
@@ -87,12 +87,12 @@ P-value: 0.00
 
 Lets look at the kde plots:
 
-<iframe src="assets/missingness_plot2.html" width="800" height="400" frameBorder="0"></iframe>
-<iframe src="assets/missingness_plot3.html" width="800" height="400" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot2.html" width="800" height="420" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot3.html" width="800" height="420" frameBorder="0"></iframe>
 
 It appears that the missingness of rating may be dependent on the number of steps in a recipe! This could be due to many reasons. If we consider the fact that these are users who *did* leave a review, but *didn't* leave a rating, the true reason for this relationship is harder to track down. Users may feel that they didn't do the long and complex recipe justice, and therefore be reluctant to leave a rating because they don't trust their judgement. Or perhaps they had a higher expectation of the complex recipe, and were reluctant to show that it didn't turn out as well as they had hoped. Or perhaps they figured 'I've been writing this stupid review for 10 minutes, I'm done'.
 
-<iframe src="assets/missingness_plot4.html" width="800" height="400" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot4.html" width="800" height="420" frameBorder="0"></iframe>
 
 Observed Difference in Mean minutes: 51.4524
 
@@ -167,7 +167,7 @@ H(A) : p ≠ 0
 
 Our p-value threshhold is .05.
 
-<iframe src="assets/hypothesis_plot2.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/hypothesis_plot2.html" width="800" height="630" frameBorder="0"></iframe>
 
 We got a P-Value of .0048, which definetely falls under our significance level. Therefore, we will reject our null hypothesis in favor of the alternative. This suggests that our formula for calculating a holistic balance score for each recipe is generalizable to a population with similar values of taste vs ease vs health in their cooking. If our algorithm can predict how people value the 'balance' of certain recipes, then this bodes well for our ability to predict how they'd holistically rate them. 
 
