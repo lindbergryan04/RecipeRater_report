@@ -1,5 +1,5 @@
 
-by Ryan Lindberg (lindbergryan04@gmail.com) and Ethan Haus (ethanhhaus@gmail.com)
+by Ryan Lindberg (lindbergryan04@gmail.com) and Ethan Haus (ethanhaus@gmail.com)
 
 ---
 
@@ -25,8 +25,6 @@ Our first step was to replace the ratings of '0' with np.nan. We then created an
 For our Univariate Analysis we wanted more insight on our 'minutes' and 'ratings' columns. Since our average ratings were so high, we wanted to see a distribution of all the values. And since we figured that the amount of effort would heavily factor into people's perceptions of the recipe and therefore their rating, we felt effort was best quantified by how long it took to complete the recipe, ergo 'minutes' column. So we decided to view the distribution to see how to best weight the feature. 
 
 <iframe src="assets/eda-minutes.html" width="800" height="600" frameBorder="0"></iframe>
-
-
 
 As you can see in the graph above, the graph is skewed right EDIT, with the majority of our values normally distributed around a rough mean of 30 minutes. There are definetely some outlier recipes that take much longer, but it's clear to see that most of our recipes are around 10 minutes to an hour. 
 
@@ -73,12 +71,25 @@ The rating column has 15036 missing values. This is due to the fact that some us
 
 <iframe src="assets/missingness_plot1.html" width="800" height="600" frameBorder="0"></iframe>
 
+Observed Difference in Mean Step Count: 1.1535
+
+P-value: 0.00
+
+Lets look at the kde plots:
+
 <iframe src="assets/missingness_plot2" width="800" height="600" frameBorder="0"></iframe>
 
 <iframe src="assets/missingness_plot3" width="800" height="600" frameBorder="0"></iframe>
 
+It appears that the missingness of rating may be dependent on the number of steps in a recipe! This could be due to many reasons. If we consider the fact that these are users who *did* leave a review, but *didn't* leave a rating, the true reason for this relationship is harder to track down. Users may feel that they didn't do the long and complex recipe justice, and therefore be reluctant to leave a rating because they don't trust their judgement. Or perhaps they had a higher expectation of the complex recipe, and were reluctant to show that it didn't turn out as well as they had hoped.
+
 <iframe src="assets/missingness_plot4" width="800" height="600" frameBorder="0"></iframe>
 
+Observed Difference in Mean minutes: 51.4524
+
+P-value: 0.1370
+
+Rating missingness does not seem to be dependent on the minutes column.
 
 ---
 
@@ -107,8 +118,9 @@ This score is mostly subjective, as we are setting the weights ourselves. This i
 
 ### Balance Score Formula:
 
-balance_score = rating_high + rating_medium + rating_low + (W_TIME * time_factor) + (W_N_STEPS * log_decay(n_steps, max_values[n_steps])) + (W_SAT_FAT * log_decay(sat_fat, max_values[sat_fat])) + (W_CALORIES * log_decay(calories, max_values[calories])) + (W_PROTEIN * log_decay(protein, max_values[protein])) + (W_CARBS * log_decay(carbs, max_values[carbs])) + (W_SUGAR * log_decay(sugar, max_values[sugar])) + (W_SODIUM * log_decay(sodium, max_values[sodium]))
+balance_score = (W_RATING_HIGH * rating_high) + (W_RATING_MEDIUM * rating_medium) + (W_RATING_LOW * rating_low) + (W_TIME * time_factor) + (W_N_STEPS * n_steps) + (W_SAT_FAT * sat_fat) + (W_CALORIES * calories) + (W_PROTEIN * protein) + (W_CARBS * carbs) + (W_SUGAR * sugar) + (W_SODIUM * sodium)
 
+Note: We used a log decay on each feature to ensure no outliers.
 
 The resulting dataframe:
 
