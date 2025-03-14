@@ -90,35 +90,36 @@ We will manually define a formula to calculate this balance score, which returns
 
 This score is mostly subjective, as we are setting the weights ourselves. This is okay though, because our goal is to plug in our own recipes, and find out if its a recipe we would like to cook.
 
-$$
+$$ 
 \begin{aligned}
 W_{\text{RATING\_HIGH}} &= 0.4 \\
 W_{\text{RATING\_MEDIUM}} &= 0.2 \\
 W_{\text{RATING\_LOW}} &= 0.0 \\
-W_{\text{TIME}} &= -0.01 \quad &\text{(Penalizes long cooking times)} \\
-W_{\text{N\_STEPS}} &= -0.06 \quad &\text{(Penalizes overly complex recipes)} \\
-W_{\text{SAT\_FAT}} &= -0.06 \quad &\text{(Less saturated fat is better)} \\
-W_{\text{CALORIES}} &= -0.01 \quad &\text{(Penalizes excessive calories)} \\
-W_{\text{PROTEIN}} &= 0.2 \quad &\text{(More protein is better)} \\
-W_{\text{CARBS}} &= -0.01 \quad &\text{(Too many carbs reduce balance)} \\
-W_{\text{SUGAR}} &= -0.04 \quad &\text{(Excess sugar is penalized)} \\
-W_{\text{SODIUM}} &= -0.03 \quad &\text{(Excess sodium is penalized)}
+W_{\text{TIME}} &= -0.01 \quad \text{(Penalizes long cooking times)} \\
+W_{\text{N\_STEPS}} &= -0.06 \quad \text{(Penalizes overly complex recipes)} \\
+W_{\text{SAT\_FAT}} &= -0.06 \quad \text{(Less saturated fat is better)} \\
+W_{\text{CALORIES}} &= -0.01 \quad \text{(Penalizes excessive calories)} \\
+W_{\text{PROTEIN}} &= 0.2 \quad \text{(More protein is better)} \\
+W_{\text{CARBS}} &= -0.01 \quad \text{(Too many carbs reduce balance)} \\
+W_{\text{SUGAR}} &= -0.04 \quad \text{(Excess sugar is penalized)} \\
+W_{\text{SODIUM}} &= -0.03 \quad \text{(Excess sodium is penalized)}
 \end{aligned}
 $$
 
 
 $$
-\text{balance\_score} =
-    \text{rating\_high} + \text{rating\_medium} + \text{rating\_low} +
-    \left(W_{\text{TIME}} \cdot \text{time\_factor} \right) +
-    \left(W_{\text{N\_STEPS}} \cdot \log\_decay(\text{n\_steps}, \text{max\_values}_{\text{n\_steps}}) \right) +
-    \left(W_{\text{SAT\_FAT}} \cdot \log\_decay(\text{sat\_fat}, \text{max\_values}_{\text{sat\_fat}}) \right) +
-    \left(W_{\text{CALORIES}} \cdot \log\_decay(\text{calories}, \text{max\_values}_{\text{calories}}) \right) +
-    \left(W_{\text{PROTEIN}} \cdot \log\_decay(\text{protein}, \text{max\_values}_{\text{protein}}) \right) +
-    \left(W_{\text{CARBS}} \cdot \log\_decay(\text{carbs}, \text{max\_values}_{\text{carbs}}) \right) +
-    \left(W_{\text{SUGAR}} \cdot \log\_decay(\text{sugar}, \text{max\_values}_{\text{sugar}}) \right) +
-    \left(W_{\text{SODIUM}} \cdot \log\_decay(\text{sodium}, \text{max\_values}_{\text{sodium}}) \right)
+\text{balance\_score} = 
+\text{rating\_high} + \text{rating\_medium} + \text{rating\_low} + 
+\left(W_{\text{TIME}} \cdot \text{time\_factor} \right) + 
+\left(W_{\text{N\_STEPS}} \cdot \log\_decay(\text{n\_steps}, \text{max\_values}[\text{n\_steps}]) \right) + 
+\left(W_{\text{SAT\_FAT}} \cdot \log\_decay(\text{sat\_fat}, \text{max\_values}[\text{sat\_fat}]) \right) +
+\left(W_{\text{CALORIES}} \cdot \log\_decay(\text{calories}, \text{max\_values}[\text{calories}]) \right) +
+\left(W_{\text{PROTEIN}} \cdot \log\_decay(\text{protein}, \text{max\_values}[\text{protein}]) \right) +
+\left(W_{\text{CARBS}} \cdot \log\_decay(\text{carbs}, \text{max\_values}[\text{carbs}]) \right) +
+\left(W_{\text{SUGAR}} \cdot \log\_decay(\text{sugar}, \text{max\_values}[\text{sugar}]) \right) +
+\left(W_{\text{SODIUM}} \cdot \log\_decay(\text{sodium}, \text{max\_values}[\text{sodium}]) \right)
 $$
+
 
 
 
