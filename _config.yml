@@ -7,6 +7,12 @@ title: Recipe Rater
 # If you want to omit the line-break after the end of text, use `>-` instead.
 #description: 
 
+# Markdown settings (enables Latex):
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
+
+
 # Build settings
 
 # If you clone the Minima repo and build locally, use this setting.
