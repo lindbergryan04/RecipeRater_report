@@ -26,7 +26,7 @@ Our first step was to replace the ratings of '0' with np.nan. We then created an
 
 For our Univariate Analysis we wanted more insight on our 'minutes' and 'ratings' columns. Since our average ratings were so high, we wanted to see a distribution of all the values. And since we figured that the amount of effort would heavily factor into people's perceptions of the recipe and therefore their rating, we felt effort was best quantified by how long it took to complete the recipe, ergo 'minutes' column. So we decided to view the distribution to see how to best weight the feature. 
 
-<iframe src="assets/eda-minutes.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/eda-minutes.html" width="800" height="400" frameBorder="0"></iframe>
 
 As you can see in the graph above, the graph is skewed right EDIT, with the majority of our values normally distributed around a rough mean of 30 minutes. There are definetely some outlier recipes that take much longer, but it's clear to see that most of our recipes are around 10 minutes to an hour. 
 
