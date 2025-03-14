@@ -1,5 +1,5 @@
 
-#### Contributors:
+## Contributors:
 
 Ryan Lindberg (lindbergryan04@gmail.com) and Ethan Haus (ethanhaus@gmail.com)
 
