@@ -41,7 +41,7 @@ Since we'd extracted all that we needed from 'nutrition' we dropped the column. 
 | 412 broccoli casserole               |        40 |         6 |            5 |... |      194.8 |       6 |       32 |        22 |        36 |
 
 
-For our univariate analysis we wanted more insight on our 'minutes' columns. 
+For our univariate analysis we wanted more insight on our 'minutes' column. 
 We figured that the amount of effort would heavily factor into people's perceptions of the recipe and therefore their rating, so understanding the distribution of minutes was essential to get a good idea of the recipes we were working with.
 
 <iframe src="assets/eda-minutes.html" width="800" height="420" frameBorder="0"></iframe>
