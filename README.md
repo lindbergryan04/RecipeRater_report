@@ -77,13 +77,12 @@ P-value: 0.00
 
 Lets look at the kde plots:
 
-<iframe src="assets/missingness_plot2" width="800" height="600" frameBorder="0"></iframe>
-
-<iframe src="assets/missingness_plot3" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot2.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot3.html" width="800" height="600" frameBorder="0"></iframe>
 
 It appears that the missingness of rating may be dependent on the number of steps in a recipe! This could be due to many reasons. If we consider the fact that these are users who *did* leave a review, but *didn't* leave a rating, the true reason for this relationship is harder to track down. Users may feel that they didn't do the long and complex recipe justice, and therefore be reluctant to leave a rating because they don't trust their judgement. Or perhaps they had a higher expectation of the complex recipe, and were reluctant to show that it didn't turn out as well as they had hoped.
 
-<iframe src="assets/missingness_plot4" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/missingness_plot4.html" width="800" height="600" frameBorder="0"></iframe>
 
 Observed Difference in Mean minutes: 51.4524
 
@@ -134,7 +133,10 @@ The resulting dataframe:
 
 
 Now that we have our balance score, lets perform our hypothesis test. For this section, we had a friend calculate 30 random recipes by hand, using his own intuition, given the information that 'balance' is a defined as a balance between time, healthiness, and rating as a proxy for taste. 
+
 We would like to test if our algorithmically calculated balance scores reflect what someone with similar priorities in their diet might score a recipe.
+
+Our test statistic is the correlation between human balance scores and algorithmically calculated balance scores.
 
 - Null Hypothesis (H0): 
 
@@ -152,20 +154,10 @@ H(A) : p ≠ 0$
 
 Our p-value threshhold is .05.
 
-Our test statistic is the difference of balance scores calculated by humans vs the balance scores calculated by algorithm. We got a P-Value of .0048, which definetely falls under our significance level. Therefore, we will reject our null hypothesis in favor of the alternative. This suggests that our formula for calculating a holistic statistic for each recipe is generalizable to a population with similar values of taste vs ease vs health in their cooking. 
+<iframe src="assets/hypothesis_plot1.html" width="800" height="600" frameBorder="0"></iframe>
+<iframe src="assets/hypothesis_plot2.html" width="800" height="600" frameBorder="0"></iframe>
 
-<iframe src="assets/hypothesis_plot1" width="800" height="600" frameBorder="0"></iframe>
-
-
-
-<iframe src="assets/hypothesis_plot2" width="800" height="600" frameBorder="0"></iframe>
-
-
-
-#### Hypothesis Test Conclusion:
-
-We got a P-value of .0048, a Pearson's R of .511. This means we reject the null in favor of the alternative hypothesis, meaning that our formula for calculating the balance score is likely generalizable to a population with similar values of taste vs ease vs health in their cooking.
-
+We got a P-Value of .0048, which definetely falls under our significance level. Therefore, we will reject our null hypothesis in favor of the alternative. This suggests that our formula for calculating a holistic balance score for each recipe is generalizable to a population with similar values of taste vs ease vs health in their cooking. 
 
 ---
 
