@@ -250,9 +250,9 @@ Permutation Test p-value: 0.0010
 
 Since the p-value is below 0.05, we reject the null hypothesis, meaning our model exhibits precision disparities across rating categories.  
 
-One major issue is that our model is very unfair toward medium-rated recipes, it doesn’t predict the medium category at all! Those poor medium-rated recipes...  
+The major issue here is that our model is very unfair toward medium rated recipes, it doesn’t predict the medium category at all! Those poor medium-rated recipes...  
 
-That said, this is a low-stakes prediction task, so a misclassified rating doesn’t have very tangible real-world consequences. 
+Although this is bad news for the performance of our random forest classifier, this is a low-stakes prediction task, so a misclassified rating doesn’t have very tangible real-world consequences.  
 
 ---
 
