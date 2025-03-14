@@ -82,7 +82,7 @@ Lets look at the kde plots:
 <iframe src="assets/missingness_plot2.html" width="800" height="600" frameBorder="0"></iframe>
 <iframe src="assets/missingness_plot3.html" width="800" height="600" frameBorder="0"></iframe>
 
-It appears that the missingness of rating may be dependent on the number of steps in a recipe! This could be due to many reasons. If we consider the fact that these are users who *did* leave a review, but *didn't* leave a rating, the true reason for this relationship is harder to track down. Users may feel that they didn't do the long and complex recipe justice, and therefore be reluctant to leave a rating because they don't trust their judgement. Or perhaps they had a higher expectation of the complex recipe, and were reluctant to show that it didn't turn out as well as they had hoped.
+It appears that the missingness of rating may be dependent on the number of steps in a recipe! This could be due to many reasons. If we consider the fact that these are users who *did* leave a review, but *didn't* leave a rating, the true reason for this relationship is harder to track down. Users may feel that they didn't do the long and complex recipe justice, and therefore be reluctant to leave a rating because they don't trust their judgement. Or perhaps they had a higher expectation of the complex recipe, and were reluctant to show that it didn't turn out as well as they had hoped. Or perhaps they figured 'I've been writing this stupid review for 10 minutes, I'm done'.
 
 <iframe src="assets/missingness_plot4.html" width="800" height="600" frameBorder="0"></iframe>
 
@@ -161,8 +161,20 @@ Our p-value threshhold is .05.
 
 <iframe src="assets/hypothesis_plot2.html" width="800" height="600" frameBorder="0"></iframe>
 
-We got a P-Value of .0048, which definetely falls under our significance level. Therefore, we will reject our null hypothesis in favor of the alternative. This suggests that our formula for calculating a holistic balance score for each recipe is generalizable to a population with similar values of taste vs ease vs health in their cooking. 
+We got a P-Value of .0048, which definetely falls under our significance level. Therefore, we will reject our null hypothesis in favor of the alternative. This suggests that our formula for calculating a holistic balance score for each recipe should be generalizable to a population with similar values of taste vs ease vs health in their cooking. If our algorithm can predict how people value the 'balance' of certain recipes, then this bodes well for our ability to predict how they'd holistically rate them. 
 
 ---
 
+## Framing a Prediction Problem
+
+
+As cool as our BalanceScore statistic from the hypothesis test was, we sadly cannot use it for our prediction. We ultimately want to predict how a user would rate a recipe. Our BalanceScore could be a cool tool for this, except that it uses rating to quantify the taste of an individual. We can't use rating to predict rating, unfortunately, as this would make our lives a lot easier. Back to the drawing board! We noticed that the vast majority of our reviews were 5 stars, and those that weren't, were 4 stars. This lead us to framing a new classification problem. We decided to create 3 seperate bins for rating, and try to predict the class of each recipe in terms of one of these bins. We have low (<= 4.6 stars), medium (4.6-4.99 stars), and high (5 stars). Since we have three buckets, this is multiclass classification. 
+
+We choose to predict the rating of each recipe because that's what struck us as 'coolest' and most useful. We also naively believed there had to be an apparent, consistent pattern to the rankings. We use information like the time the recipe takes, the number of steps in the recipe, and the nutritional information of the recipe, which is available to the cook before they make the recipe and are able to rank the recipe out of 5 stars. We are choosing to evaulate our model based on accuracy, as this seems like the most intuitive way to analyze it. If our model's goal is to predict the rating, the best model would have perfect accuracy. WHY NOT OTHER METRIC.
+
+---
+
+## Baseline Model
+
+Since we are predicting one of three categorical buckets, we decided to use a random forest model. We used the 'minutes', 'n_steps', 'n_ingredients', 'calories', 'sugar', 'carbs', 'sat_fat', 'sodium', and 'protein' features. There are all discrete quantitative features. 
 
