@@ -86,42 +86,31 @@ The rating column has 15036 missing values. This is due to the fact that some us
 
 Before we begin our hypothesis test, we will first define what we call a balance score. The balance score is a rating that we give each recipe based on its balance between time to cook, taste, and nutritional profile. We will using recipe rating as a proxy for taste.
 
-We will manually define a formula to calculate this balance score, which returns scores from 1-10, with 10 being the most healthy, easy to cook, and protein dense meals, and 1 being unhealthy, hard to cook, and less nutritional meals.
+We will manually define a formula to calculate this balance score, which is a score from 1-10, with 10 being the most healthy, easy to cook, and protein dense meals, and 1 being unhealthy, hard to cook, and less nutritional meals.
 
 This score is mostly subjective, as we are setting the weights ourselves. This is okay though, because our goal is to plug in our own recipes, and find out if its a recipe we would like to cook.
 
-$$ 
-\begin{aligned}
-W_{\text{RATING\_HIGH}} &= 0.4 \\
-W_{\text{RATING\_MEDIUM}} &= 0.2 \\
-W_{\text{RATING\_LOW}} &= 0.0 \\
-W_{\text{TIME}} &= -0.01 \quad \text{(Penalizes long cooking times)} \\
-W_{\text{N\_STEPS}} &= -0.06 \quad \text{(Penalizes overly complex recipes)} \\
-W_{\text{SAT\_FAT}} &= -0.06 \quad \text{(Less saturated fat is better)} \\
-W_{\text{CALORIES}} &= -0.01 \quad \text{(Penalizes excessive calories)} \\
-W_{\text{PROTEIN}} &= 0.2 \quad \text{(More protein is better)} \\
-W_{\text{CARBS}} &= -0.01 \quad \text{(Too many carbs reduce balance)} \\
-W_{\text{SUGAR}} &= -0.04 \quad \text{(Excess sugar is penalized)} \\
-W_{\text{SODIUM}} &= -0.03 \quad \text{(Excess sodium is penalized)}
-\end{aligned}
-$$
+### Weight Assignments:
+- **W_RATING_HIGH** = 0.4  
+- **W_RATING_MEDIUM** = 0.2  
+- **W_RATING_LOW** = 0.0  
+- **W_TIME** = -0.01 (Penalizes long cooking times)  
+- **W_N_STEPS** = -0.06 (Penalizes overly complex recipes)  
+- **W_SAT_FAT** = -0.06 (Less saturated fat is better)  
+- **W_CALORIES** = -0.01 (Penalizes excessive calories)  
+- **W_PROTEIN** = 0.2 (More protein is better)  
+- **W_CARBS** = -0.01 (Too many carbs reduce balance)  
+- **W_SUGAR** = -0.04 (Excess sugar is penalized)  
+- **W_SODIUM** = -0.03 (Excess sodium is penalized)  
+
+---
+
+### Balance Score Formula:
+
+balance_score = rating_high + rating_medium + rating_low + (W_TIME * time_factor) + (W_N_STEPS * log_decay(n_steps, max_values[n_steps])) + (W_SAT_FAT * log_decay(sat_fat, max_values[sat_fat])) + (W_CALORIES * log_decay(calories, max_values[calories])) + (W_PROTEIN * log_decay(protein, max_values[protein])) + (W_CARBS * log_decay(carbs, max_values[carbs])) + (W_SUGAR * log_decay(sugar, max_values[sugar])) + (W_SODIUM * log_decay(sodium, max_values[sodium]))
 
 
-$$
-\text{balance\_score} = 
-\text{rating\_high} + \text{rating\_medium} + \text{rating\_low} + 
-\left(W_{\text{TIME}} \cdot \text{time\_factor} \right) + 
-\left(W_{\text{N\_STEPS}} \cdot \log\_decay(\text{n\_steps}, \text{max\_values}[\text{n\_steps}]) \right) + 
-\left(W_{\text{SAT\_FAT}} \cdot \log\_decay(\text{sat\_fat}, \text{max\_values}[\text{sat\_fat}]) \right) +
-\left(W_{\text{CALORIES}} \cdot \log\_decay(\text{calories}, \text{max\_values}[\text{calories}]) \right) +
-\left(W_{\text{PROTEIN}} \cdot \log\_decay(\text{protein}, \text{max\_values}[\text{protein}]) \right) +
-\left(W_{\text{CARBS}} \cdot \log\_decay(\text{carbs}, \text{max\_values}[\text{carbs}]) \right) +
-\left(W_{\text{SUGAR}} \cdot \log\_decay(\text{sugar}, \text{max\_values}[\text{sugar}]) \right) +
-\left(W_{\text{SODIUM}} \cdot \log\_decay(\text{sodium}, \text{max\_values}[\text{sodium}]) \right)
-$$
-
-
-
+The resulting dataframe:
 
 |     id | name                                 | ... |   avg_rating | rating_category   | rating_low   | rating_medium   | rating_high   |   balance_score |
 |-------:|:-------------------------------------|----:|-------------:|:------------------|:-------------|:----------------|:--------------|----------------:|
@@ -132,25 +121,26 @@ $$
 | 475785 | 2000 meatloaf                        | ... |            5 | High              | False        | False           | True          |         8.75722 |
 
 
+Now that we have our balance score, lets perform our hypothesis test. For this section, we had a friend calculate 30 random recipes by hand, using his own intuition, given the information that 'balance' is a defined as a balance between time, healthiness, and rating as a proxy for taste. 
+We would like to test if our algorithmically calculated balance scores reflect what someone with similar priorities in their diet might score a recipe.
 
-
-- Null Hypothesis ($H_{0}$): 
+- Null Hypothesis (H0): 
 
 There is no significant correlation between human calculated balance scores based off intuition and the algorithmically calculated balance scores. 
 
-$H_{0}$ : $p = 0$
+H(0) : p = 0
 
-(Where $p$ represents the correlation coefficient between human human balance scores and algorithm balance scores.)
+(Where p represents the correlation coefficient between human human balance scores and algorithm balance scores.)
 
-- Alternative Hypothesis ($H_{A}$):
-
+- Alternative Hypothesis (HA):
 ​
 There is a significant correlation between human calculated balance scores based off intuition and the algorithmically calculated balance scores. 
 
-$H_{0}$ : $p ≠ 0$
+H(A) : p ≠ 0$
 
-Our test statistic is the difference of balance scores calculated by humans vs the balance scores calculated by algorithm. We are going to test at the popular 95% confident level, or .05. We got a P-Value of .0048, which definetely falls under our significance level. Therefore, we will reject our null hypothesis in favor of the alternative. This means that our formula for calculating a holistic statistic for each recipe is generalizable  to a population with similar values of taste vs ease vs health in their cooking. 
+Our p-value threshhold is .05.
 
+Our test statistic is the difference of balance scores calculated by humans vs the balance scores calculated by algorithm. We got a P-Value of .0048, which definetely falls under our significance level. Therefore, we will reject our null hypothesis in favor of the alternative. This suggests that our formula for calculating a holistic statistic for each recipe is generalizable to a population with similar values of taste vs ease vs health in their cooking. 
 
 <iframe src="assets/hypothesis_plot1" width="800" height="600" frameBorder="0"></iframe>
 
