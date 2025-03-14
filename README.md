@@ -220,26 +220,23 @@ Another suspicion is the uneven distribution of rating categories. With such a l
 
 ## Fairness Analysis  
 
-To check if our model performs worse for certain groups, we compared the **precision** of predictions across the low, medium, and high rating categories. We ran a permutation test to determine whether the observed differences in precision were statistically significant.  
+To check if our model performs worse for certain groups, we compared the precision of predictions across the low, medium, and high rating categories. We ran a permutation test to determine whether the observed differences in precision were statistically significant.  
 
 ### Observed Statistic  
-**0.591**  
+0.591
 
 ### Null Hypothesis (H₀)  
 Our model is fair in terms of precision between rating groups. Any differences in precision between low, medium, and high categories are due to random chance, not systematic bias.  
 
-**Restated:** The maximum difference in precision across rating categories is approximately zero:  
-> max(Precision) - min(Precision) ≈ 0 for all categories (low, medium, high).  
+The maximum difference in precision across rating categories is approximately zero:  
+max(Precision) - min(Precision) ≈ 0 for all categories (low, medium, high).  
 
 ### Alternative Hypothesis (Hₐ)  
 Our model is unfair, meaning there is a significant difference in precision across rating categories. The observed disparity is greater than what would be expected by chance.  
+ 
+max(Precision) - min(Precision) > 0.10.  
 
-**Restated:**  
-> max(Precision) - min(Precision) > some threshold (δ).  
-
-### Precision Calculation  
 Precision for a given category is calculated as:  
-
 Precision = (True Positives in category) / (Predicted Positives in category)
 
 ### Results & Interpretation  
