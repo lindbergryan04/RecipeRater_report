@@ -30,7 +30,7 @@ Then, we dropped some columns we weren't going to use. These ended up being 'rev
 
 Next, we took the nutrition column which contained a list of nutritional information for the recipe in the form: [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)] (PDV stands for “percentage of daily value”), and we converted each value into its own column for each recipe. 
 
-Since we'd extracted all that we needed from 'nutrition' we dropped the column. Our data ended up looking like this, minus the 'tags', 'ingredients', 'total_fat', and 'carbs' columns, which we couldn't include in the report in order for our dataframe to horizontally fit the page.
+Since we'd extracted all that we needed from 'nutrition' we dropped the column. Our data ended up looking like this: (minus the 'tags', 'ingredients', 'total_fat', and 'carbs' columns, which didn't fit on page)
 
 | name                                 |   minutes |   n_steps |   avg_rating |... |   calories |   sugar |   sodium |   protein |   sat_fat |
 |:-------------------------------------|----------:|----------:|-------------:|---:|-----------:|--------:|---------:|----------:|----------:|
