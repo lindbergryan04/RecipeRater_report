@@ -240,7 +240,15 @@ Precision for a given category is calculated as:
 Precision = (True Positives in category) / (Predicted Positives in category)
 
 ### Results & Interpretation  
-Since the p-value is below 0.05, we*reject the null hypothesis, meaning our model exhibits precision disparities across rating categories.  
+
+Observed Precision by Group:
+'High': 0.5913778745756197, 'Low': 0.38782051282051283, 'Medium': 0.0
+
+Observed Range of Precision Differences: 0.5914
+
+Permutation Test p-value: 0.0010
+
+Since the p-value is below 0.05, we reject the null hypothesis, meaning our model exhibits precision disparities across rating categories.  
 
 One major issue is that our model is very unfair toward medium-rated recipes, it doesn’t predict the medium category at all! Those poor medium-rated recipes...  
 
