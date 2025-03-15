@@ -43,7 +43,7 @@ This project utilizes EDA, feature engineering, statistical hypothesis testing, 
 
 ## Cleaning and EDA
 
-Our first step in cleaning the data was to replace the ratings of '0' with np.nan. We then created an 'avg_rating' column to represent the average rating for each recipe. We did this by grouping by each recipeID, since most recipes had multiple reviews, then we simply took the mean after grouping. 
+Our first step in cleaning the data was to replace the ratings of '0' with np.nan. We then created an 'avg_rating' column to represent the average rating for each recipe. We did this by grouping each recipe by ID, since most recipes had multiple reviews, then we simply took the mean for each recipe after grouping. 
 
 We dropped the duplicate reviews, but kept a copy of the dataframe with duplicates for the missingness section. 
 
