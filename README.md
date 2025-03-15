@@ -19,8 +19,29 @@ This project utilizes EDA, feature engineering, statistical hypothesis testing, 
 
 ---
 
-## Cleaning and EDA
+## Understanding the Data
 
+| Column            | Description                                                         | Unique Values or Range |
+|------------------|---------------------------------------------------------------------|------------------------|
+| `'id'`           | Recipe ID                                                          | Unique ID values       |
+| `'name'`         | Recipe name                                                        | Various text values    |
+| `'minutes'`      | Minutes required to prepare the recipe                            | Varies (integer)       |
+| `'contributor_id'` | User ID who submitted the recipe                                 | Unique ID values       |
+| `'submitted'`    | Date the recipe was submitted                                     | YYYY-MM-DD format      |
+| `'tags'`         | Food.com tags associated with the recipe                          | List of text values    |
+| `'ingredients'`  | Ingredients used within the recipe                                 | List of text values    |
+| `'nutrition'`    | Nutrition information `[calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)]` | List of numerical values |
+| `'n_steps'`      | Number of steps in the recipe                                    | Integer                |
+| `'steps'`        | Text for the recipe steps, in order                              | List of text values    |
+| `'description'`  | User-provided description of the recipe                          | Text                   |
+| `'user_id'`      | ID of the user who interacted with the recipe                    | Unique ID values       |
+| `'date'`         | Date of the interaction                                          | YYYY-MM-DD format      |
+| `'rating'`       | Rating given in the interaction                                  | Integer (1-5)          |
+| `'review'`       | Review text from the interaction                                | Text                   |
+
+---
+
+## Cleaning and EDA
 
 Our first step in cleaning the data was to replace the ratings of '0' with np.nan. We then created an 'avg_rating' column to represent the average rating for each recipe. We did this by grouping by each recipeID, since most recipes had multiple reviews, then we simply took the mean after grouping. 
 
@@ -194,7 +215,7 @@ We got a P-Value of .0048, which definitely falls under our significance level. 
 
 ## Framing a Prediction Problem
 
-As cool as our balance score feature from the hypothesis test was, we sadly cannot use it for our prediction. We ultimately want to predict how a user would rate a recipe. Our balance score could be a great feature for this, but it uses rating category to quantify the 'taste' of an recipe. We can't use rating to predict rating. Back to the drawing board! We noticed that the vast majority of our reviews were 5 stars, and those that weren't, were 4 stars. This lead us to framing a new classification problem. We decided to create 3 separate bins for rating, and try to predict the class of each recipe in terms of one of these bins. We have low (<= 4.6 stars), medium (4.6-4.99 stars), and high (5 stars). Since we have three buckets, this is multiclass classification. We think a good model for this task would be a random forest from SKLearn. 
+As cool as our balance score feature from the hypothesis test was, we sadly cannot use it for our prediction. We ultimately want to predict how a user would rate a recipe. Our balance score could be a great feature for this, but it uses rating category to quantify the 'taste' of a recipe. We can't use rating to predict rating. Back to the drawing board! We noticed that the vast majority of our reviews were 5 stars, and those that weren't, were 4 stars. This lead us to framing a new classification problem. We decided to create 3 separate bins for rating, and try to predict the class of each recipe in terms of one of these bins. We have low (<= 4.6 stars), medium (4.6-4.99 stars), and high (5 stars). Since we have three buckets, this is multiclass classification. We think a good model for this task would be a random forest from SKLearn. 
 
 We are chose to predict the rating category of each recipe because that's what struck us as 'coolest' and most useful, since we could use these predicted ratings to calculate balance scores for our own recipes, which have never been rated before. We used features like the time the recipe takes, the number of steps in the recipe, and the nutritional information of the recipe. We chose to evaluate our model based on accuracy, since the goal of our prediction is to assign a rating category as accurately as possible, and we want our predicted ratings to best reflect to the real rating. Minimizing false positives or false negatives is not the greatest priority, since this is a low stakes prediction task. 
 
@@ -216,7 +237,7 @@ Finally, we put it all together into one final model, using everything we had le
 
 With all of these improvements, our final model had an accuracy of 58%, a striking 1% improvement over our base model. Any improvement is good, right? Right?
 
-We suspect that this is primarily due to the fact that our features really do not tell us much about the target, and our base model had already made use of almost all of the meaningful patterns present in the data. 
+We suspect that this is primarily due to the fact that our features really do not tell us much about the target, and our base model had already made use of almost all of the meaningful patterns present in the original data. 
 Another suspicion is the uneven distribution of rating categories. With such a large number of ratings in the ‘high’ category, the model may be biased to predict high in most cases. Currently about 60% of the recipes are rated ‘high’, 30% are rated ‘low’, and around 10% rated ‘medium’. We attempted to redefine our bins such that we had a 60/20/20 split, but found this didn’t affect the results. 
 
 ---
