@@ -3,6 +3,9 @@
 
 Ryan Lindberg (lindbergryan04@gmail.com) and Ethan Haus (ethanhaus@gmail.com)
 
+
+#### Project Repo: [lindbergryan04.github.io/RecipeRater](https://lindbergryan04.github.io/RecipeRater_report/)
+
 ---
 
 ## Introduction
@@ -283,4 +286,3 @@ Although this is bad news for the performance of our random forest classifier, t
 ## Thanks for checking out our project!
 
 
-#### Project Repo: [lindbergryan04.github.io/RecipeRater](https://lindbergryan04.github.io/RecipeRater_report/)
